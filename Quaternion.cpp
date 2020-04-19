@@ -38,7 +38,7 @@ namespace feg {
 		}
 		return *this;
 	}
-	inline Quaternion& Quaternion::Normalize() noexcept {
+	Quaternion& Quaternion::Normalize() noexcept {
 		const float& sMag = SqrMagnitude();
 		if (sMag != 0) {
 			const float& invMag = 1 / Math::Sqrt(sMag);
