@@ -80,6 +80,11 @@ namespace feg {
 		return Matrix4x4(elements);
 	}
 
+	Matrix4x4 Matrix4x4::CreateTRSMatrix(const Vector4& translation, const Quaternion& rotation, const Vector4& scale) noexcept
+	{
+		return Matrix4x4::CreateTranslationMatrix(translation) * Matrix4x4::CreateRotationMatrix(rotation) * Matrix4x4::CreateScaleMatrix(scale);
+	}
+
 	void Matrix4x4::SetRow(const unsigned char& row, Vector4 values)
 	{
 		ASSERT(0 <= row && row <= 3);
