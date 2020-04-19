@@ -18,8 +18,8 @@ namespace feg {
 	inline float Quaternion::SqrMagnitude() const noexcept {
 		return x * x + y * y + z * z + w * w;
 	}
-	inline float Quaternion::Magnitude() const noexcept {
-		return sqrtf(SqrMagnitude());
+	float Quaternion::Magnitude() const noexcept {
+		return Math::Sqrt(SqrMagnitude());
 	}
 	inline Quaternion& Quaternion::Conjugate() noexcept {
 		x = -x;
@@ -102,23 +102,23 @@ namespace feg {
 		return *this;
 	}
 
-	inline Quaternion Quaternion::identity() noexcept
+	Quaternion Quaternion::identity() noexcept
 	{
 		return Quaternion(0, 0, 0, 1);
 	}
-	inline Quaternion operator+(const Quaternion& lhs, const Quaternion& rhs) noexcept
+	Quaternion operator+(const Quaternion& lhs, const Quaternion& rhs) noexcept
 	{
 		return Quaternion(lhs) += rhs;
 	}
-	inline Quaternion operator-(const Quaternion& lhs, const Quaternion& rhs) noexcept
+	Quaternion operator-(const Quaternion& lhs, const Quaternion& rhs) noexcept
 	{
 		return Quaternion(lhs) -= rhs;
 	}
-	inline Quaternion operator*(const Quaternion& lhs, const Quaternion& rhs) noexcept
+	Quaternion operator*(const Quaternion& lhs, const Quaternion& rhs) noexcept
 	{
 		return Quaternion(lhs) *= rhs;
 	}
-	inline Quaternion operator*(const Quaternion& lhs, const float& rhs) noexcept
+	Quaternion operator*(const Quaternion& lhs, const float& rhs) noexcept
 	{
 		return Quaternion(lhs) *= rhs;
 	}

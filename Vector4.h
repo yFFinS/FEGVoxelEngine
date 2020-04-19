@@ -17,57 +17,15 @@ namespace feg {
 		Vector4(const Vector2& xy, const float& z, const float& w) noexcept;
 		Vector4(const Vector3& xyz) noexcept;
 
-		inline float magnitude() const noexcept {
-			return sqrtf(sqrMagnitude());
-		}
-		inline float sqrMagnitude() const noexcept {
-			return x * x + y * y + z * z + w * w;
-		}
+		float Magnitude() const noexcept;
+		float SqrMagnitude() const noexcept;
 
-		inline Vector4& operator+=(const Vector4& rhs) noexcept {
-			x += rhs.x;
-			y += rhs.y;
-			z += rhs.z;
-			w += rhs.w;
-			return *this;
-		}
-		inline Vector4& operator-=(const Vector4& rhs) noexcept {
-			x -= rhs.x;
-			y -= rhs.y;
-			z -= rhs.z;
-			w -= rhs.w;
-			return *this;
-		}
-		inline Vector4& operator*=(const float& rhs) noexcept {
-			x *= rhs;
-			y *= rhs;
-			z *= rhs;
-			w *= rhs;
-			return *this;
-		}
-		inline Vector4& operator/=(const float& rhs) {
-			ASSERT(rhs != 0);
-			x /= rhs;
-			y /= rhs;
-			z /= rhs;
-			w /= rhs;
-			return *this;
-		}
-		inline Vector4& DivideValues(const Vector4& rhs) {
-			ASSERT(rhs.x != 0 && rhs.y != 0 && rhs.z != 0 && rhs.w != 0)
-			x /= rhs.x;
-			y /= rhs.y;
-			z /= rhs.z;
-			w /= rhs.w;
-			return *this;
-		}
-		inline Vector4& MultipleValues(const Vector4& rhs) noexcept {
-			x *= rhs.x;
-			y *= rhs.y;
-			z *= rhs.z;
-			w *= rhs.w;
-			return *this;
-		}
+		Vector4& operator+=(const Vector4& rhs) noexcept;
+		Vector4& operator-=(const Vector4& rhs) noexcept;
+		Vector4& operator*=(const float& rhs) noexcept;
+		Vector4& operator/=(const float& rhs);
+		Vector4& DivideValues(const Vector4& rhs);
+		Vector4& MultipleValues(const Vector4& rhs) noexcept;
 
 	public:
 		float x;
@@ -75,17 +33,16 @@ namespace feg {
 		float z;
 		float w;
 
+		static Vector4 zero() noexcept;
+		static Vector4 one() noexcept;
+		friend Vector4 operator/(const Vector4& lhs, const float& rhs);
+		friend Vector4 operator-(const Vector4& lhs, const Vector4& rhs) noexcept;
+		friend Vector4 operator*(const Vector4& lhs, const float& rhs) noexcept;
+		friend Vector4 operator*(const float& lhs, const Vector4& rhs) noexcept;
+		friend Vector4 operator-(const Vector4& lhs) noexcept;
+		friend Vector4 operator+(const Vector4& lhs, const Vector4& rhs) noexcept;
 		
 	};
-
-	inline static Vector4 zero() noexcept;
-	inline static Vector4 one() noexcept;
-	extern inline Vector4 operator/(const Vector4& lhs, const float& rhs);
-	extern inline Vector4 operator-(const Vector4& lhs, const Vector4& rhs) noexcept;
-	extern inline Vector4 operator*(const Vector4& lhs, const float& rhs) noexcept;
-	extern inline Vector4 operator*(const float& lhs, const Vector4& rhs) noexcept;
-	extern inline Vector4 operator-(const Vector4& lhs) noexcept;
-	extern inline Vector4 operator+(const Vector4& lhs, const Vector4& rhs) noexcept;
 }
 #endif // !Vector4_H
 

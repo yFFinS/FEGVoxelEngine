@@ -1,4 +1,5 @@
 #include "Vector4.h"
+#include "Math.h"
 
 namespace feg {
 
@@ -41,16 +42,75 @@ namespace feg {
 	Vector4::Vector4(const Vector2& xy, const float& z, const float& w) noexcept : x(xy.x), y(xy.y), z(z), w(w)
 	{
 	}
+	inline float Vector4::Magnitude() const noexcept {
+		return Math::Sqrt(SqrMagnitude());
+	}
+	inline float Vector4::SqrMagnitude() const noexcept {
+		return x * x + y * y + z * z + w * w;
+	}
+
+	inline Vector4& Vector4::operator+=(const Vector4& rhs) noexcept {
+		x += rhs.x;
+		y += rhs.y;
+		z += rhs.z;
+		w += rhs.w;
+		return *this;
+	}
+	inline Vector4& Vector4::operator-=(const Vector4& rhs) noexcept {
+		x -= rhs.x;
+		y -= rhs.y;
+		z -= rhs.z;
+		w -= rhs.w;
+		return *this;
+	}
+	inline Vector4& Vector4::operator*=(const float& rhs) noexcept {
+		x *= rhs;
+		y *= rhs;
+		z *= rhs;
+		w *= rhs;
+		return *this;
+	}
+	inline Vector4& Vector4::operator/=(const float& rhs) {
+		ASSERT(rhs != 0);
+		x /= rhs;
+		y /= rhs;
+		z /= rhs;
+		w /= rhs;
+		return *this;
+	}
+	inline Vector4& Vector4::DivideValues(const Vector4& rhs) {
+		ASSERT(rhs.x != 0 && rhs.y != 0 && rhs.z != 0 && rhs.w != 0)
+			x /= rhs.x;
+		y /= rhs.y;
+		z /= rhs.z;
+		w /= rhs.w;
+		return *this;
+	}
+	inline Vector4& Vector4::MultipleValues(const Vector4& rhs) noexcept {
+		x *= rhs.x;
+		y *= rhs.y;
+		z *= rhs.z;
+		w *= rhs.w;
+		return *this;
+	}
+
+	inline Vector4 Vector4::zero() noexcept
+	{
+		return Vector4(0);
+	}
+
+	inline Vector4 Vector4::one() noexcept
+	{
+		return Vector4(1);
+	}
 
 	Vector4 operator-(const Vector4& lhs, const Vector4& rhs) noexcept
 	{
-		return lhs + (-rhs);
+		return Vector4(lhs) -= rhs;
 	}
 	Vector4 operator*(const Vector4& lhs, const float& rhs) noexcept
 	{
-		Vector4 vec(lhs);
-		vec *= rhs;
-		return vec;
+		return Vector4(lhs) *= rhs;
 	}
 	Vector4 operator-(const Vector4& lhs) noexcept
 	{
@@ -58,26 +118,14 @@ namespace feg {
 	}
 	Vector4 operator+(const Vector4& lhs, const Vector4& rhs) noexcept
 	{
-		Vector4 vec(lhs);
-		vec += rhs;
-		return vec;
+		return Vector4(lhs) += rhs;
 	}
 	Vector4 operator*(const float& lhs, const Vector4& rhs) noexcept
 	{
 		return rhs * lhs;
 	}
-	Vector4 zero() noexcept
-	{
-		return Vector4(0);
-	}
-	Vector4 one() noexcept
-	{
-		return Vector4(1);
-	}
 	Vector4 operator/(const Vector4& lhs, const float& rhs)
 	{
-		Vector4 vec(lhs);
-		vec /= rhs;
-		return vec;
+		return Vector4(lhs) /= rhs;
 	}
 }

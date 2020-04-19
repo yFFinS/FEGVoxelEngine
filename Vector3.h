@@ -13,108 +13,46 @@ namespace feg {
 		Vector3(const float& t) noexcept;
 		Vector3(const Vector2& xy) noexcept;
 
-		inline float magnitude() const noexcept {
-			return sqrtf(sqrMagnitude());
-		}
-		inline float sqrMagnitude() const noexcept {
-			return x * x + y * y + z * z;
-		}
+		float Magnitude() const noexcept;
+		float SqrMagnitude() const noexcept;
 
-		inline Vector3& operator+=(const Vector3& rhs) noexcept {
-			x += rhs.x;
-			y += rhs.y;
-			z += rhs.z;
-			return *this;
-		}
-		inline Vector3& operator-=(const Vector3& rhs) noexcept {
-			x -= rhs.x;
-			y -= rhs.y;
-			z -= rhs.z;
-			return *this;
-		}
-		inline Vector3& operator*=(const float& rhs) noexcept {
-			x *= rhs;
-			y *= rhs;
-			z *= rhs;
-			return *this;
-		}
-		inline Vector3& operator/=(const float& rhs) {
-			ASSERT(rhs != 0);
-			x /= rhs;
-			y /= rhs;
-			z /= rhs;
-			return *this;
-		}
-		inline Vector3& DivideValues(const Vector3& rhs) {
-			ASSERT(rhs.x != 0 && rhs.y != 0 && rhs.z != 0);
-			x /= rhs.x;
-			y /= rhs.y;
-			z /= rhs.z;
-			return *this;
-		}
-		inline Vector3& MultipleValues(const Vector3& rhs) noexcept {
-			x *= rhs.x;
-			y *= rhs.y;
-			z *= rhs.z;
-			return *this;
-		}
+		Vector3& operator+=(const Vector3& rhs) noexcept;
+		Vector3& operator-=(const Vector3& rhs) noexcept;
+		Vector3& operator*=(const float& rhs) noexcept;
+		Vector3& operator/=(const float& rhs);
+		Vector3& DivideValues(const Vector3& rhs);
+		Vector3& MultipleValues(const Vector3& rhs) noexcept;
+
+		friend Vector3 operator/(const Vector3& lhs, const float& rhs);
+		friend Vector3 operator-(const Vector3& lhs, const Vector3& rhs) noexcept;
+		friend Vector3 operator*(const Vector3& lhs, const float& rhs) noexcept;
+		friend Vector3 operator*(const float& lhs, const Vector3& rhs) noexcept;
+		friend Vector3 operator-(const Vector3& lhs) noexcept;
+		friend Vector3 operator+(const Vector3& lhs, const Vector3& rhs) noexcept;
 
 	public:
 		float x;
 		float y;
 		float z;
 
-		inline Vector2 xy() const noexcept {
-			return Vector2(x, y);
-		}
-		inline Vector2 yx() const noexcept {
-			return Vector2(y, x);
-		}
-		inline Vector2 xz() const noexcept {
-			return Vector2(x, z);
-		}
-		inline Vector2 zx() const noexcept {
-			return Vector2(z, x);
-		}
-		inline Vector2 yz() const noexcept {
-			return Vector2(y, z);
-		}
-		inline Vector2 zy() const noexcept {
-			return Vector2(z, y);
-		}
-		inline Vector2 xx() const noexcept {
-			return Vector2(x, x);
-		}
-		inline Vector2 yy() const noexcept {
-			return Vector2(y, y);
-		}
-		inline Vector2 zz() const noexcept {
-			return Vector2(z, z);
-		}
+		Vector2 xy() const noexcept;
+		Vector2 yx() const noexcept;
+		Vector2 xz() const noexcept;
+		Vector2 zx() const noexcept;
+		Vector2 yz() const noexcept;
+		Vector2 zy() const noexcept;
+		Vector2 xx() const noexcept;
+		Vector2 yy() const noexcept;
+		Vector2 zz() const noexcept;
 
-		inline static Vector3 zero() noexcept {
-			return Vector3(0, 0, 0);
-		}
-		inline static Vector3 one() noexcept {
-			return Vector3(1, 1, 1);
-		}
-		inline static Vector3 forward() noexcept {
-			return Vector3(0, 0, 1);
-		}
-		inline static Vector3 up() noexcept {
-			return Vector3(0, 1, 0);
-		}
-		inline static Vector3 right() noexcept {
-			return Vector3(1, 0, 0);
-		}
+		static Vector3 zero() noexcept;
+		static Vector3 one() noexcept;
+		static Vector3 forward() noexcept;
+		static Vector3 up() noexcept;
+		static Vector3 right() noexcept;
 	};
 
-	extern inline Vector3 operator/(const Vector3& lhs, const float& rhs);
-	extern inline Vector3 operator-(const Vector3& lhs, const Vector3& rhs) noexcept;
-	extern inline Vector3 operator*(const Vector3& lhs, const float& rhs) noexcept;
-	extern inline Vector3 operator*(const float& lhs, const Vector3& rhs) noexcept;
-	extern inline Vector3 operator-(const Vector3& lhs) noexcept;
-	extern inline Vector3 operator+(const Vector3& lhs, const Vector3& rhs) noexcept;
+
 }
 #endif // !VECTOR3_H
 

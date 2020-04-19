@@ -11,32 +11,32 @@ namespace feg {
 	{
 	}
 
-	inline Vector2 operator-(const Vector2& lhs, const Vector2& rhs) noexcept
+	Vector2 operator-(const Vector2& lhs, const Vector2& rhs) noexcept
 	{
 		return Vector2(lhs) -= rhs;
 	}
 
-	inline Vector2 operator*(const Vector2& lhs, const float& rhs) noexcept
+	Vector2 operator*(const Vector2& lhs, const float& rhs) noexcept
 	{
 		return Vector2(lhs) *= rhs;
 	}
 
-	inline Vector2 operator-(const Vector2& lhs) noexcept
+	Vector2 operator-(const Vector2& lhs) noexcept
 	{
 		return Vector2(-lhs.x, -lhs.y);
 	}
 
-	inline Vector2 operator+(const Vector2& lhs, const Vector2& rhs) noexcept
+	Vector2 operator+(const Vector2& lhs, const Vector2& rhs) noexcept
 	{
 		return Vector2(lhs) += rhs;
 	}
 
-	inline Vector2 operator*(const float& lhs, const Vector2& rhs) noexcept
+	Vector2 operator*(const float& lhs, const Vector2& rhs) noexcept
 	{
 		return rhs * lhs;
 	}
 
-	inline Vector2 operator/(const Vector2& lhs, const float& rhs)
+	Vector2 operator/(const Vector2& lhs, const float& rhs)
 	{
 		return Vector2(lhs) /= rhs;
 	}
@@ -81,25 +81,25 @@ namespace feg {
 		y *= rhs.y;
 		return *this;
 	}
-	inline Vector2 Vector2::DivideValues(const Vector2& lhs, const Vector2& rhs) noexcept
+	Vector2 Vector2::DivideValues(const Vector2& lhs, const Vector2& rhs) noexcept
 	{
 		return Vector2(lhs).DivideValues(rhs);
 	}
-	inline Vector2 Vector2::MultipleValues(const Vector2& lhs, const Vector2& rhs) noexcept
+	Vector2 Vector2::MultipleValues(const Vector2& lhs, const Vector2& rhs) noexcept
 	{
 		return Vector2(lhs).MultipleValues(rhs);
 	}
-	inline Vector2 Vector2::zero() noexcept {
+	Vector2 Vector2::zero() noexcept {
 		return Vector2(0, 0);
 	}
-	inline Vector2 Vector2::one() noexcept {
+	Vector2 Vector2::one() noexcept {
 		return Vector2(1, 1);
 	}
-	inline Vector2 Vector2::right() noexcept
+	Vector2 Vector2::right() noexcept
 	{
 		return Vector2(1, 0);
 	}
-	inline Vector2 Vector2::up() noexcept
+	Vector2 Vector2::up() noexcept
 	{
 		return Vector2(0, 1);
 	}
