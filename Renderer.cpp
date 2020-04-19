@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "SafetyCheck.h"
+#include "Matrix4x4.h"
 
 namespace feg {
 	Renderer* Renderer::_instance;
@@ -7,6 +8,7 @@ namespace feg {
 	Renderer::Renderer() : _currentLayer(0), _layers()
 	{
 		_layers[0] = new VertexArray();
+		Matrix4x4 mat;
 	}
 
 	Renderer& Renderer::Get()

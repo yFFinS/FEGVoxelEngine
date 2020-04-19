@@ -15,7 +15,6 @@ namespace feg {
 		Vector4(const Vector2& xy, const Vector2& zw) noexcept;
 		Vector4(const Vector2& xy) noexcept;
 		Vector4(const Vector2& xy, const float& z, const float& w) noexcept;
-		Vector4(const Vector2& xy) noexcept;
 		Vector4(const Vector3& xyz) noexcept;
 
 		inline float magnitude() const noexcept {

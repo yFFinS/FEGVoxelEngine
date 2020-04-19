@@ -11,8 +11,7 @@ namespace feg {
 		{
 			for (auto comp : obj->getComponents())
 			{
-				comp
-			}
+			};
 		}
 	}
 }

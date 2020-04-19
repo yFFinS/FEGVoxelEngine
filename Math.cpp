@@ -4,14 +4,14 @@
 
 namespace feg {
 
-	float Math::Sin(const float& value)
+	float Math::Sin(const float& radians)
 	{
-		return std::sinf(value);
+		return std::sinf(radians);
 	}
 
-	float Math::Cos(const float& value)
+	float Math::Cos(const float& radians)
 	{
-		return std::cosf(value);
+		return std::cosf(radians);
 	}
 
 	float Math::Lerp(const float& a, const float& b, const float& t) noexcept
@@ -24,14 +24,16 @@ namespace feg {
 		return static_cast<int>(std::round(value));
 	}
 
-	float Math::Tan(const float& value)
+	float Math::Tan(const float& radians)
 	{
-		return std::tanf(value);
+		ASSERT(radians != 0.5f && radians != 1.5f);
+		return std::tanf(radians);
 	}
 
-	float Math::Ctn(const float& value)
+	float Math::Ctn(const float& radians)
 	{
-		return 1 / Tan(value);
+		ASSERT(radians != 1 && radians != 2 && radians != 0.5f && radians != 1.5f);
+		return 1 / std::tanf(radians);
 	}
 
 	float Math::Clamp01(const float& value) noexcept
@@ -52,6 +54,18 @@ namespace feg {
 	float Math::Max(const float& a, const float& b) noexcept
 	{
 		return a > b ? a : b;
+	}
+
+	float Math::Sqrt(const float& value)
+	{
+		ASSERT(value >= 0);
+		return std::sqrtf(value);
+	}
+
+	float Math::Pow(const float& value, const float& power)
+	{
+		ASSERT(value >= 0 && (value != 0 || power != 0));
+		return std::powf(value, power);
 	}
 
 }

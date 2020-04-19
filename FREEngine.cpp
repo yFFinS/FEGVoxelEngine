@@ -14,8 +14,8 @@ static Mesh* mesh;
 
 void render() {
 	Application::vao->Bind();
-	mesh->Render();
-	Drawer::Rect(0, 0, 100, 100);
+	/*mesh->Render();
+	Drawer::Rect(0, 0, 100, 100);*/
 	Application::vao->Unbind();
 	Application::SetTitle((std::to_string(1) + " meshes " + std::to_string(int(1 / Time::getDeltaTime())) + " FPS").c_str());
 }
