@@ -11,6 +11,7 @@ namespace feg {
 	{
 	private:
 		uint16_t _count;
+		uint16_t _maxIndexCount;
 
 	public:
 		IndexBuffer();

@@ -14,7 +14,7 @@ namespace feg {
 		Renderer() = delete;
 
 	public:
-		static void Render(const std::shared_ptr<VertexArray>& vao, const Shader& shader);
+		static void Render(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Shader>& shader);
 	};
 
 }

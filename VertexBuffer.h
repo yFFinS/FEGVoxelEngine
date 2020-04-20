@@ -10,12 +10,13 @@ namespace feg {
 	{
 	private:
 		VertexBufferLayout _bufferLayout;
+		uint32_t _maxBufferSize;
 	public:
 
 		VertexBuffer();
 		~VertexBuffer() override;
 		void Bind() const override;
-		void SetData(const uint16_t& size, const void* data);
+		void SetData(const uint32_t& size, const void* data);
 		void Unbind() const override;
 		void Generate();
 		void Dispose() override;
@@ -23,7 +24,7 @@ namespace feg {
 		const VertexBufferLayout& GetLayout() const noexcept;
 		
 	public:
-		static std::shared_ptr<VertexBuffer> Create(const uint16_t& size, const void* data);
+		static std::shared_ptr<VertexBuffer> Create(const uint32_t& size, const void* data);
 	};
 }
 

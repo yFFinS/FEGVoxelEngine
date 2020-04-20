@@ -3,7 +3,7 @@
 
 namespace feg {
 
-	IndexBuffer::IndexBuffer() : _count(0)
+	IndexBuffer::IndexBuffer() : _count(0), _maxIndexCount(0)
 	{
 	}
 
@@ -14,14 +14,14 @@ namespace feg {
 
 	void IndexBuffer::Bind() const
 	{
-		ASSERT(_id != 0);
-		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, _id));
+		ASSERT_MSG(_id != 0, "Index Buffer not created.");
+		GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _id));
 	}
 
 	void IndexBuffer::Unbind() const
 	{
 #ifndef NDEBUG
-		GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 #endif // !NDEBUG
 	}
 
@@ -34,8 +34,14 @@ namespace feg {
 	void IndexBuffer::SetIndices(const uint16_t& count, const uint16_t* indices)
 	{
 		Bind();
+		if (_maxIndexCount >= count) {
+			GLCALL(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, count * sizeof(uint16_t), indices));
+		}
+		else {
+			GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint16_t), indices, GL_STATIC_DRAW));
+			_maxIndexCount = count;
+		}
 		_count = count;
-		GLCALL(glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(uint16_t), indices));
 		Unbind();
 	}
 
@@ -55,7 +61,8 @@ namespace feg {
 		std::shared_ptr<IndexBuffer> buf(new IndexBuffer());
 		buf->Generate();
 		buf->Bind();
-		GLCALL(glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint16_t), indices, GL_STATIC_DRAW));
+		buf->_maxIndexCount = count;
+		GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint16_t), indices, GL_STATIC_DRAW));
 		buf->Unbind();
 		return buf;
 	}

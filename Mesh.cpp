@@ -10,13 +10,14 @@ namespace feg {
 		Dispose();
 	}
 
-	Mesh::Mesh() : _vao(new VertexArray()), _vbo(new VertexBuffer()), _ibo(new IndexBuffer())
+	Mesh::Mesh() : _vao(new VertexArray())
 	{
-		_vbo->Generate();
-		_ibo->Generate();
+		_vbo = VertexBuffer::Create(0, 0);
+		_ibo = IndexBuffer::Create(0, 0);
 		const VertexBufferLayout& vbl = { {ShaderDataType::Float3, "u_Position", false} };
 		_vbo->SetLayout(vbl);
 		_vao->AddBuffer(_vbo);
+		_vao->SetIndexBuffer(_ibo);
 	}
 
 	void Mesh::SetVertices(const uint16_t& count, const Vector3* vertices)
@@ -45,5 +46,9 @@ namespace feg {
 		_ibo->Dispose();
 		_vao->Dispose();
 
+	}
+	const std::shared_ptr<VertexArray> Mesh::GetVao() const noexcept
+	{
+		return _vao;
 	}
 }

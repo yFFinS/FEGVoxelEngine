@@ -23,6 +23,8 @@ namespace feg {
 		void SetIndices(const uint16_t& size, const uint16_t* indices);
 		void Dispose();
 
+		const std::shared_ptr<VertexArray> GetVao() const noexcept;
+
 	};
 }
 

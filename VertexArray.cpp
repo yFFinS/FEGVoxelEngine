@@ -15,10 +15,10 @@ namespace feg {
 
 	void VertexArray::Bind() const
 	{
-		ASSERT(_id != 0);
-		GLCALL(glBindVertexArray(_id));
 		if (_indexBuffer != nullptr)
 			_indexBuffer->Bind();
+		ASSERT_MSG(_id != 0, "Vertex Array not created.");
+		GLCALL(glBindVertexArray(_id));
 	}
 
 	void VertexArray::AddBuffer(const std::shared_ptr<VertexBuffer>& vbo)
@@ -29,8 +29,8 @@ namespace feg {
 		{
 			const auto& elem = *elems;
 			GLCALL(glEnableVertexAttribArray(_vertexBufferIndex));
-			GLCALL(glVertexAttribPointer(_vertexBufferIndex, elem.size, GetDataGLType(elem.type), elem.normalized ? GL_TRUE : GL_FALSE,
-				vbo->GetLayout().getStride(), (const void*)(elem.offset)));
+			GLCALL(glVertexAttribPointer(_vertexBufferIndex, elem.GetComponentCount(), GetDataGLType(elem.type), elem.normalized ? GL_TRUE : GL_FALSE,
+				vbo->GetLayout().GetStride(), (const void*)(elem.offset)));
 			_vertexBufferIndex++;
 		}
 		_vertexBuffers.push_back(vbo);
@@ -55,7 +55,10 @@ namespace feg {
 
 	void VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo)
 	{
+		Bind();
+		ibo->Bind();
 		_indexBuffer = ibo;
+		Unbind();
 	}
 
 	const std::shared_ptr<IndexBuffer> VertexArray::GetIndexBuffer() const noexcept

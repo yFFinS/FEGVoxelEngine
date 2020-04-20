@@ -12,6 +12,7 @@ namespace feg {
 
 	static unsigned int GetDataTypeSize(ShaderDataType type) {
 		switch (type) {
+		case ShaderDataType::None: return 0;
 		case ShaderDataType::Float: return 4;
 		case ShaderDataType::Float2: return 8;
 		case ShaderDataType::Float3: return 12;
@@ -20,7 +21,7 @@ namespace feg {
 		case ShaderDataType::Int: return 4;
 		case ShaderDataType::Bool: return 1;
 		}
-		ASSERT(false);
+		ASSERT_MSG(false, "Invalid data type");
 		return 0;
 	}
 
@@ -34,7 +35,7 @@ namespace feg {
 		case ShaderDataType::Int: return GL_INT;
 		case ShaderDataType::Bool: return GL_BOOL;
 		}
-		ASSERT(false);
+		ASSERT_MSG(false, "Invalid data type");
 		return 0;
 	}
 
@@ -46,6 +47,7 @@ namespace feg {
 		bool normalized;
 
 		VertexBufferElement(const ShaderDataType& dataType, const std::string& name, const bool& normalized = false) noexcept;
+		uint8_t GetComponentCount() const;
 	};
 
 	class VertexBufferLayout
@@ -56,13 +58,12 @@ namespace feg {
 		~VertexBufferLayout() noexcept;
 		void Clear() noexcept;
 
-
 	private:
 		std::vector<VertexBufferElement> _data;
 		unsigned int _stride;
 
 	public:
-		inline unsigned int getStride() const noexcept {
+		inline unsigned int GetStride() const noexcept {
 			return _stride;
 		}
 

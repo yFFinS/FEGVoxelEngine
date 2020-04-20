@@ -9,20 +9,24 @@ namespace feg {
 	}
 
 	bool SafetyCheck::GLLogCall() {
+		bool errorFound = false;
 #ifndef NDEBUG
 		while (GLenum error = glGetError()) {
 			std::cout << "[OpengGL Error]: " << std::hex << error << std::endl;
-			return false;
+			errorFound = true;
 		}
 #endif // !NDEBUG
-		return true;
+		return !errorFound;
 	}
 
-	void SafetyCheck::Assert(const bool& x)
+	void SafetyCheck::Assert(const bool& x, const std::string& message)
 	{
+#ifndef NDEBUG
 		if (!(x)) {
+			if (message != "")
+				std::cout << message << std::endl;
 			DebugBreak();
 		}
+#endif // !NDEBUG
 	}
-
 }

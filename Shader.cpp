@@ -39,9 +39,11 @@ namespace feg {
 			GLCALL(glGetProgramiv(_programId, GL_LINK_STATUS, &result));
 			GLCALL(glGetProgramiv(_programId, GL_INFO_LOG_LENGTH, &logLength));
 			if (logLength > 0) {
-				std::vector<char> errMsg(logLength);
+#pragma warning(disable:26451)
+				std::vector<char> errMsg(logLength + 1);
 				GLCALL(glGetProgramInfoLog(_programId, logLength, NULL, &errMsg[0]));
 				fprintf(stdout, "%s\n", &errMsg[0]);
+#pragma warning(restore:26451)
 			}
 		}
 		GLCALL(glDeleteShader(_vertexShaderId));
@@ -50,7 +52,7 @@ namespace feg {
 
 	enum class ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 };
 
-	Shader Shader::Parse(const char* shaderFile)
+	std::shared_ptr<Shader> Shader::Parse(const char* shaderFile)
 	{
 		std::string vertexShaderCode, fragmentShaderCode, line;
 		std::ifstream shaderStream(shaderFile, std::ios::in);
@@ -73,7 +75,7 @@ namespace feg {
 			}
 		}
 		shaderStream.close();
-		return Shader(vertexShaderCode.c_str(), fragmentShaderCode.c_str());
+		return std::shared_ptr<Shader>(new Shader(vertexShaderCode.c_str(), fragmentShaderCode.c_str()));
 	}
 
 	bool Shader::Compile(unsigned int shaderId, const char* shaderCode) {
@@ -85,18 +87,20 @@ namespace feg {
 		GLCALL(glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result));
 		GLCALL(glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength));
 		if (logLength > 0) {
-			std::vector<char> errMsg(logLength);
+#pragma warning(disable:26451)
+			std::vector<char> errMsg(logLength + 1);
 			GLCALL(glGetShaderInfoLog(shaderId, logLength, NULL, &errMsg[0]));
 			fprintf(stdout, "%s\n", &errMsg[0]);
 			return false;
+#pragma warning(restore:26451)
 		}
 		return true;
 	}
 
 	void Shader::Bind() const
 	{
-		ASSERT(_programId != 0);
-		GLCALL(glUseProgram(_programId));
+		ASSERT_MSG(_programId != 0, "Shader not created");
+		glUseProgram(_programId);
 	}
 
 	void Shader::Unbind() const

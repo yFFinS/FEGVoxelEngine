@@ -1,6 +1,7 @@
 #pragma once
 #ifndef SHADER_H
 #define SHADER_H
+#include <memory>
 
 namespace feg {
 
@@ -10,7 +11,7 @@ namespace feg {
 		~Shader();
 		Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
-		static Shader Parse(const char* shaderFile);
+		static std::shared_ptr<Shader> Parse(const char* shaderFile);
 		static bool Compile(unsigned int shaderId, const char* shaderCode);
 		void Bind() const;
 		void Unbind() const;
