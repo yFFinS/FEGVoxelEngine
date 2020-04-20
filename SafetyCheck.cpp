@@ -18,4 +18,11 @@ namespace feg {
 		return true;
 	}
 
+	void SafetyCheck::Assert(const bool& x)
+	{
+		if (!(x)) {
+			DebugBreak();
+		}
+	}
+
 }

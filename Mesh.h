@@ -10,18 +10,17 @@ namespace feg {
 	class Mesh
 	{
 	private:
-		IndexBuffer _ibo;
-		VertexBuffer _vbo;
-		VertexArray* _vao;
-		unsigned char _layer;
-		std::vector<IndexType> _indices;
+		std::shared_ptr<IndexBuffer> _ibo;
+		std::shared_ptr<VertexBuffer> _vbo;
+		std::shared_ptr<VertexArray> _vao;
+		std::vector<uint16_t> _indices;
 		std::vector<Vector3> _vertices;
 	public:
 
 		~Mesh();
-		Mesh(const unsigned char& layer = 0);
-		void SetVertices(const unsigned int& size, const Vector3* vertices);
-		void SetIndices(const unsigned int& size, const unsigned int* indices);
+		Mesh();
+		void SetVertices(const uint16_t& size, const Vector3* vertices);
+		void SetIndices(const uint16_t& size, const uint16_t* indices);
 		void Dispose();
 
 	};

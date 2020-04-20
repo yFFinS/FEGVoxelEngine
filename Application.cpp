@@ -8,7 +8,6 @@ namespace feg {
 	unsigned int Application::_height;
 	GLFWwindow* Application::window = NULL;
 	Event Application::onUpdate;
-	VertexArray* Application::vao = NULL;
 
 	bool Application::Initialize(const int& width, const int& height, const char* title)
 	{
@@ -36,7 +35,7 @@ namespace feg {
 		}
 
 		glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-		vao = new VertexArray();
+		std::cout << glGetString(GL_VERSION) << std::endl;
 		return true;
 	}
 

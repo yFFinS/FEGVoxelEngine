@@ -3,14 +3,8 @@
 
 namespace feg {
 
-	VertexBuffer::VertexBuffer()
+	VertexBuffer::VertexBuffer() : _bufferLayout({ {ShaderDataType::None, "None", false} })
 	{
-		Generate();
-	}
-
-	VertexBuffer::VertexBuffer(const unsigned int& size, const void* data) : VertexBuffer()
-	{
-		SetData(size, data);
 	}
 
 	VertexBuffer::~VertexBuffer()
@@ -18,17 +12,10 @@ namespace feg {
 		Dispose();
 	}
 
-	void VertexBuffer::SetData(const unsigned int& size, const void* data)
-	{
-		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-		Unbind();
-	}
-
 	void VertexBuffer::Generate()
 	{
 		Dispose();
-		glGenBuffers(1, &_id);
+		GLCALL(glGenBuffers(1, &_id));
 	}
 
 	void VertexBuffer::Bind() const
@@ -37,9 +24,18 @@ namespace feg {
 		glBindBuffer(GL_ARRAY_BUFFER, _id);
 	}
 
+	void VertexBuffer::SetData(const uint16_t& size, const void* data)
+	{
+		Bind();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+		Unbind();
+	}
+
 	void VertexBuffer::Unbind() const
 	{
+#ifndef NDEBUG
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif //!NDEBUG
 	}
 
 	void VertexBuffer::Dispose()
@@ -47,6 +43,26 @@ namespace feg {
 		Unbind();
 		if (_id != 0)
 			glDeleteBuffers(1, &_id);
+	}
+
+	void VertexBuffer::SetLayout(const VertexBufferLayout& layout) noexcept
+	{
+		_bufferLayout = layout;
+	}
+	
+	const VertexBufferLayout& VertexBuffer::GetLayout() const noexcept
+	{
+		return _bufferLayout;
+	}
+
+	std::shared_ptr<VertexBuffer> VertexBuffer::Create(const uint16_t& size, const void* data)
+	{
+		std::shared_ptr<VertexBuffer> buf(new VertexBuffer());
+		buf->Generate();
+		buf->Bind();
+		GLCALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+		buf->Unbind();
+		return buf;
 	}
 
 

@@ -2,23 +2,28 @@
 #ifndef VERTEX_BUFFER_H
 #define VERTEX_BUFFER_H
 #include "BaseBuffer.h"
-#include "Vector3.h"
 #include "VertexBufferLayout.h"
 
 namespace feg {
 	class VertexBuffer :
 		public BaseBuffer
 	{
+	private:
+		VertexBufferLayout _bufferLayout;
 	public:
 
 		VertexBuffer();
-		VertexBuffer(const unsigned int& size, const void* data);
 		~VertexBuffer() override;
-		void Generate() override;
 		void Bind() const override;
-		void SetData(const unsigned int& size, const void* data);
+		void SetData(const uint16_t& size, const void* data);
 		void Unbind() const override;
+		void Generate();
 		void Dispose() override;
+		void SetLayout(const VertexBufferLayout& layout) noexcept;
+		const VertexBufferLayout& GetLayout() const noexcept;
+		
+	public:
+		static std::shared_ptr<VertexBuffer> Create(const uint16_t& size, const void* data);
 	};
 }
 

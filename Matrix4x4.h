@@ -25,6 +25,7 @@ namespace feg {
  
 		void SetRow(const unsigned char& row, Vector4 values);
 		void SetColumn(const unsigned char& col, Vector4 values);
+		const float* GetElementsPtr() const noexcept;
 
 	public:
 		Matrix4x4& operator+=(const Matrix4x4& rhs) noexcept;

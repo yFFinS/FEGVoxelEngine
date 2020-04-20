@@ -12,8 +12,10 @@ namespace feg {
 
 		static Shader Parse(const char* shaderFile);
 		static bool Compile(unsigned int shaderId, const char* shaderCode);
-		void Use() const;
-
+		void Bind() const;
+		void Unbind() const;
+		unsigned int GetUniformIndex(const char*& name) const;
+		
 	private:
 		Shader();
 

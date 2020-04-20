@@ -107,6 +107,11 @@ namespace feg {
 #pragma warning(default:26451)
 	}
 
+	const float* Matrix4x4::GetElementsPtr() const noexcept
+	{
+		return &_elements.front();
+	}
+
 	Matrix4x4 operator+(const Matrix4x4& lhs, const Matrix4x4& rhs)
 	{
 		return Matrix4x4(lhs) += rhs;

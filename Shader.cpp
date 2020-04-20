@@ -93,10 +93,24 @@ namespace feg {
 		return true;
 	}
 
-	void Shader::Use() const
+	void Shader::Bind() const
 	{
 		ASSERT(_programId != 0);
 		GLCALL(glUseProgram(_programId));
+	}
+
+	void Shader::Unbind() const
+	{
+#ifndef NDEBUG
+		GLCALL(glUseProgram(0));
+#endif // !NDEBUG
+	}
+
+	unsigned int Shader::GetUniformIndex(const char*& name) const
+	{
+		unsigned int index;
+		GLCALL(index = glGetUniformBlockIndex(_programId, name));
+		return index;
 	}
 
 }

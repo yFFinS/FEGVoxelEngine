@@ -10,37 +10,40 @@ namespace feg {
 		Dispose();
 	}
 
-	Mesh::Mesh(const unsigned char& layer) : _vbo(), _ibo(), _layer(layer)
+	Mesh::Mesh() : _vao(new VertexArray()), _vbo(new VertexBuffer()), _ibo(new IndexBuffer())
 	{
-		_vao = Renderer::Get().GetVao(_layer);
-		VertexBufferLayout vbl;
-		vbl.Push<float>(3);
-		_vao->AddBuffer(_vbo, vbl);
+		_vbo->Generate();
+		_ibo->Generate();
+		const VertexBufferLayout& vbl = { {ShaderDataType::Float3, "u_Position", false} };
+		_vbo->SetLayout(vbl);
+		_vao->AddBuffer(_vbo);
 	}
 
-	void Mesh::SetVertices(const unsigned int& count, const Vector3* vertices)
+	void Mesh::SetVertices(const uint16_t& count, const Vector3* vertices)
 	{
 		_vertices.clear();
-		for (unsigned int i = 0; i < count; i++)
+		for (uint16_t i = 0; i < count; i++)
 		{
 			_vertices.push_back(Vector3(vertices[i]));
 		}
-		_vbo.SetData(count * sizeof(Vector3), &_vertices.front());
+		_vbo->SetData(count * sizeof(Vector3), &_vertices.front());
 	}
 
-	void Mesh::SetIndices(const unsigned int& count, const unsigned int* indices)
+	void Mesh::SetIndices(const uint16_t& count, const uint16_t* indices)
 	{
 		_indices.clear();
-		for (unsigned int i = 0; i < count; i++)
+		for (uint16_t i = 0; i < count; i++)
 		{
-			_indices.push_back(IndexType(indices[i]));
+			_indices.push_back(uint16_t(indices[i]));
 		}
-		_ibo.SetIndices(count, &_indices.front());
+		_ibo->SetIndices(count, &_indices.front());
 	}
 
 	void Mesh::Dispose()
 	{
-		_vbo.Dispose();
-		_ibo.Dispose();
+		_vbo->Dispose();
+		_ibo->Dispose();
+		_vao->Dispose();
+
 	}
 }

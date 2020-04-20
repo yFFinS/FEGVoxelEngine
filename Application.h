@@ -25,7 +25,6 @@ namespace feg {
 	public:
 		static GLFWwindow* window;
 		static Event onUpdate;
-		static VertexArray* vao;
 
 		static unsigned int getWidth() noexcept;
 		static unsigned int getHeight() noexcept;

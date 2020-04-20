@@ -1,7 +1,7 @@
 #pragma once
 #ifndef BASE_BUFFER_H
 #define BASE_BUFFER_H
-#include <GL/gl3w.h>
+#include "freengine.h"
 namespace feg {
 	class BaseBuffer
 	{
@@ -9,7 +9,6 @@ namespace feg {
 		BaseBuffer() : _id(0) {};
 		virtual ~BaseBuffer() {};
 	public:
-		virtual void Generate() = 0;
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 		virtual void Dispose() = 0;
@@ -17,7 +16,7 @@ namespace feg {
 	protected:
 		unsigned int _id;
 	public:
-		inline const unsigned int getId() const noexcept {
+		inline unsigned int GetId() const noexcept {
 			return _id;
 		}
 	};

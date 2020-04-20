@@ -13,9 +13,10 @@ namespace feg {
 	public:
 		static void GLClearError();
 		static bool GLLogCall();
+		static void Assert(const bool& x);
 	};
 
-#define ASSERT(x) if (!(x)) __debugbreak();
+#define ASSERT(x) SafetyCheck::Assert(x);
 #define GLCALL(x) SafetyCheck::GLClearError(); x; ASSERT(SafetyCheck::GLLogCall());
 }
 

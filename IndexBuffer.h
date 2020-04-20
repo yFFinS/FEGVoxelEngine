@@ -2,25 +2,28 @@
 #ifndef INDEX_BUFFER_H
 #define INDEX_BUFFER_H
 #include "BaseBuffer.h"
+#include <stdint.h>
+#include <memory>
 namespace feg {
 
-	typedef unsigned short int IndexType;
 	class IndexBuffer :
 		public BaseBuffer
 	{
 	private:
-		IndexType _count;
+		uint16_t _count;
 
 	public:
 		IndexBuffer();
-		IndexBuffer(const IndexType& count, const IndexType* indices);
 		~IndexBuffer() override;
-		void Generate() override;
 		void Bind() const override;
 		void Unbind() const override;
-		void SetIndices(const IndexType& count, const IndexType* indices);
+		void Generate();
+		void SetIndices(const uint16_t& count, const uint16_t* indices);
 		void Dispose() override;
-		IndexType getCount() const noexcept;
+		const uint16_t GetCount() const noexcept;
+
+	public:
+		static std::shared_ptr<IndexBuffer> Create(const uint16_t& count, const uint16_t* indices);
 	};
 
 
